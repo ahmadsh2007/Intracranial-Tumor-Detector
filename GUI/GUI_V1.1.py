@@ -21,13 +21,13 @@ with st.sidebar:
 
 
 # Check if Dataset.csv Exists and Load it if it does
-if os.path.exists(r'C:\Users\shatn\OneDrive\Desktop\GitHubProjects\Intracranial-Tumor-Detector\V1.1\3ClassesFirstModel.csv'): 
-    df = pd.read_csv(r'C:\Users\shatn\OneDrive\Desktop\GitHubProjects\Intracranial-Tumor-Detector\V1.1\3ClassesFirstModel.csv', index_col=None)
+if os.path.exists(r'AutoML Random Files/4ClassesFirstModel.csv'): 
+    df = pd.read_csv(r'AutoML Random Files/4ClassesFirstModel.csv', index_col=None)
 else:
     file = st.file_uploader('Upload Your Dataset')
     if file:
         df = pd.read_csv(file, index_col=None)
-        df.to_csv(r'AutoML Random Files/dataset.csv', index=None)
+        df.to_csv(r'AutoML Random Files/4ClassesFirstModel.csv', index=None)
         st.dataframe(df)
 # Initialize a Session State Variable to Store the Profile Report
 if 'profile_report' not in st.session_state:
@@ -39,20 +39,11 @@ if 'profile_report' not in st.session_state:
 ModelPath = r'models'
 modelname = r'C:\Users\shatn\OneDrive\Desktop\GitHubProjects\Intracranial-Tumor-Detector\GUI\models\ICTD_Trained_Model.h5'
 DownloadPath = r'C:\Users\shatn\OneDrive\Desktop\GitHubProjects\Intracranial-Tumor-Detector\GUI\models\ICTD_Trained_Model.h5'
-modelName3Classes = r'C:\Users\shatn\OneDrive\Desktop\GitHubProjects\Intracranial-Tumor-Detector\GUI\models\3Classes_30.Dec.2024.15.00.26.815891_32epochs.h5'
-
-# Load the pre-trained model
-def load_trained_model():
-    model = tf.keras.models.load_model(modelname, compile=False)
-    return model
-
-def loadTrainedModel3Classes():
-    model = tf.keras.models.load_model(modelName3Classes, compile=False)
-    return model
+modelName3Classes = r'models/4Classes_31.Dec.2024.09.57.39.184201_32epochs.h5'
 
 
-model = load_trained_model()
-model3Classes = loadTrainedModel3Classes()
+fourClassesodel = tf.keras.models.load_model(modelName3Classes, compile=False)
+
 
 # Function to preprocess the image
 def preprocess_image(image):
@@ -66,19 +57,20 @@ def preprocess_image(image):
 # Function to classify the tumor type
 def TumorType(preprocessed_image) -> None:
     # Get predictions
-    yhat = model.predict(preprocessed_image)
+    yhat = fourClassesodel.predict(preprocessed_image)
     
     # Get the class with the highest prediction probability
     predicted_class = tf.argmax(yhat, axis=1).numpy()[0]
     st.write(predicted_class)
-    st.write(model3Classes.summary())
+    st.write(fourClassesodel.summary())
     st.write(yhat)
     
     # Map the predicted class index to labels
     label_map = {
         0: "Glioma",
         1: "Meningioma",
-        2: "Pituitary"
+        2: "No Tumor",
+        3: "Pituitary"
     }
     
     # Determine the predicted label
@@ -86,40 +78,6 @@ def TumorType(preprocessed_image) -> None:
         
     # Display prediction result
     st.error(f'Image has been Classified as Class {predicted_class} ({predicted_label} Detected)')
-
-# def custom_info(text):  this is a comment: to justify text on command line 46
-#    st.markdown(
-#        f"""
-#        <div class="custom-info">
-#            {text}
-#        </div>
-#        """,
-#        unsafe_allow_html=True
-#    )
-
-# st.markdown(  this is a comment: to justify text on command line 46
-#    """
-#    <style>
-#   .custom-info {
-#        background-color: d9edf7;
-#        color: 31708f;
-#        padding: 1rem;
-#        border-radius: 0.5rem;
-#        text-align: justify;
-#        text-justify: inter-word;
-#    }
-#    </style>
-#    """,
-#    unsafe_allow_html=True
-# ) this is a comment: very important if u want to justify line 46 u must change st.info --> custom_info
-
-
-# if You wan to add "What is Intracranial Tumor Detector" Then Add it Here
-# Dont Forget to Add "What is Intracranial Tumor Detector" in Navigation Bar at line 72
-
-
-# if You wan to add "Model Result" Then Add it Here
-# Dont Forget to Add "Model Result" in Navigation Bar at line 72
 
 
 if choice == 'Upload an Image':
@@ -132,34 +90,26 @@ if choice == 'Upload an Image':
         image = Image.open(uploaded_file)
         preprocessed_image = preprocess_image(image)
 
-        # Make prediction with the first model (Tumor detection)
-        if model is not None:
-            prediction: float = model.predict(preprocessed_image)  # This is for tumor/no tumor prediction
-            # Interpret results
-            if prediction > 0.5 and prediction <= 1:
-                st.success("Predicted class: No Tumor Detected to Determine its Type")
-            elif prediction < 0.5 and prediction >= 0:
-                st.error("Predicted class: Intracranial Tumor Detected")
-            elif prediction == 0.5:
-                st.write("Neutral")
-            else:
-                st.write("Bugged Code?!")
 
         # Make prediction with the second model (Tumor Type classification)
-        if model3Classes is not None:
-            prediction_tumor = model3Classes.predict(preprocessed_image)  # This is for tumor type classification
+        if fourClassesodel is not None:
+            prediction_tumor = fourClassesodel.predict(preprocessed_image)  # This is for tumor type classification
             # Get the class with the highest prediction probability
             predicted_class = np.argmax(prediction_tumor, axis=1)[0]  # Get the index of the predicted class
 
             label_map = {
                 0: "Glioma",
                 1: "Meningioma",
-                2: "Pituitary"
+                2: "No Intercranial Tumor",
+                3: "Pituitary"
             }
 
             # Display tumor type prediction
             predicted_label = label_map.get(predicted_class, "Unknown")
-            st.error(f'Predicted class: {predicted_class} ({predicted_label} Detected)')
+            if predicted_class == 2:
+                st.success(f'Predicted class: {predicted_label} Detected')
+            else:
+                st.error(f'Predicted class: {predicted_label} Detected')
 
         st.image(image, caption='Uploaded Image', use_column_width=True)
 
@@ -175,7 +125,7 @@ if choice == 'Result Analysis':
 
 
 if choice == 'Download our AI Trained Model':
-    st.markdown("<h2 style='text-align: center;'>Download ICTD by MSJS</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center;'>Download ICTD (Intracranial Tumor Detector) for OLD Binary Classification Model by MSJS</h2>", unsafe_allow_html=True)
 
     # How to Center "the div" meme
     st.markdown(
