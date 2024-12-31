@@ -1,6 +1,6 @@
 ## **Introduction**
 
-Medical errors (MEs) represent one of the most critical challenges within the healthcare sector, and they can be categorized into several types. This project focuses on **diagnostic errors**. **Misdiagnosis** is one of the most common types of malpractice, with **cancer** being one of the most likely conditions to be misdiagnosed. Given the malignant and unpredictable nature of cancer, diagnostic errors could result in **irreversible life-threatening complications** or even mortality .
+Medical errors (MEs) represent one of the most critical challenges within the healthcare sector, and they can be categorized into several types. This project focuses on **diagnostic errors**. **Misdiagnosis** is one of the most common types of malpractice, with **cancer** being one of the most likely conditions to be misdiagnosed. Given the malignant and unpredictable nature of cancer, diagnostic errors could result in **irreversible life-threatening complications** or even mortality.
 
 ## **Project Overview**
 
