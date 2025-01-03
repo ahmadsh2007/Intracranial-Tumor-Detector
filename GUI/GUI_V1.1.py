@@ -21,13 +21,13 @@ with st.sidebar:
 
 
 # Check if Dataset.csv Exists and Load it if it does
-if os.path.exists(r'AutoML Random Files/4ClassesFirstModel.csv'): 
-    df = pd.read_csv(r'AutoML Random Files/4ClassesFirstModel.csv', index_col=None)
+if os.path.exists(r'C:\Users\shatn\OneDrive\Desktop\GitHubProjects\Intracranial-Tumor-Detector\GUI\AutoML Random Files\4ClassesFirstModel.csv'): 
+    df = pd.read_csv(r'C:\Users\shatn\OneDrive\Desktop\GitHubProjects\Intracranial-Tumor-Detector\GUI\AutoML Random Files\4ClassesFirstModel.csv', index_col=None)
 else:
     file = st.file_uploader('Upload Your Dataset')
     if file:
         df = pd.read_csv(file, index_col=None)
-        df.to_csv(r'AutoML Random Files/4ClassesFirstModel.csv', index=None)
+        df.to_csv(r'C:\Users\shatn\OneDrive\Desktop\GitHubProjects\Intracranial-Tumor-Detector\GUI\AutoML Random Files\4ClassesFirstModel.csv', index=None)
         st.dataframe(df)
 # Initialize a Session State Variable to Store the Profile Report
 if 'profile_report' not in st.session_state:
