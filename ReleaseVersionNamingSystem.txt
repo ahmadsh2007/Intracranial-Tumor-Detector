@@ -1,0 +1,43 @@
+Software Release Version Types
+
+1. Major Version (X.0.0)
+Indicates: Significant changes to the software, such as breaking changes or major updates.
+Example: 2.0.0 - A new major version is released with potential backward-incompatible changes.
+
+2. Minor Version (1.X.0)
+Indicates: New features or functionality added to the software in a backward-compatible manner.
+Example: 1.3.0 - A new minor version adds features but does not break existing functionality.
+
+3. Patch Version (1.0.X)
+Indicates: Bug fixes or minor improvements that are backward-compatible.
+Example: 1.0.3 - A patch that fixes issues without changing the software's functionality.
+
+4. Pre-release Versions (X.X.X-alpha, X.X.X-beta, etc.)
+Indicates: Versions that are not stable and may not be fully functional or feature-complete.
+Examples:
+1.0.0-alpha - An alpha version, typically for internal testing or very early development.
+1.0.0-beta - A beta version, usually a public release for testing new features, with the expectation
+that there may be bugs.
+
+5. Release Candidate (X.X.X-rc)
+Indicates: A version that is potentially the final release unless significant bugs are found.
+Example: 1.0.0-rc1 - Release candidate 1, ready for public testing before the final stable release.
+
+6. Final Release (X.X.X)
+Indicates: The stable and fully-functional version of the software.
+Example: 1.0.0 - The official stable release of the software.
+
+7. Patch/Hotfix Versions
+Indicates: A very small release typically focused on immediate critical fixes.
+Example: 1.0.1 or 1.0.0-hf1 - Hotfix for urgent issues or security patches.
+
+8. Long-Term Support (LTS) Versions
+Indicates: A version that will be supported for an extended period, often with important security
+patches and bug fixes.
+Example: 1.0.0 LTS - A version designated for extended support.
+
+9. Development Version (X.X.X-dev)
+Indicates: A version that is in active development and may not be stable or feature-complete.
+Example: 1.0.0-dev - A development version of the software for early or internal use.
+These release types help users understand the stability, features, and potential risks of using
+specific versions of software.
