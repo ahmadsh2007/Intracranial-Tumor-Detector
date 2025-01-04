@@ -24,8 +24,8 @@ with st.sidebar:
 
 
 # Check if the two datasets exist and load them if they do
-tumorCSV = r'C:\Users\shatn\OneDrive\Desktop\GitHubProjects\Intracranial-Tumor-Detector\V1.1.1\TumorClassesFirstModel.csv'
-mainCSV = r'C:\Users\shatn\OneDrive\Desktop\GitHubProjects\Intracranial-Tumor-Detector\V1.1.1\MainClassesFirstModel.csv'
+tumorCSV = r'C:\Users\shatn\OneDrive\Desktop\GitHubProjects\Intracranial-Tumor-Detector\V1.2\TumorClassesFirstModel.csv'
+mainCSV = r'C:\Users\shatn\OneDrive\Desktop\GitHubProjects\Intracranial-Tumor-Detector\V1.2\MainClassesFirstModel.csv'
 
 if os.path.exists(tumorCSV) and os.path.exists(mainCSV):
     dfT = pd.read_csv(tumorCSV, index_col=None)
@@ -48,9 +48,9 @@ if 'profileReportFileMain' not in st.session_state:
     profile_dfM = ProfileReport(dfM, title="Pandas Profiling Report - Main Classes", explorative=True)
     st.session_state.profileReportFileMain = profile_dfM
 
-modelname = r'C:\Users\shatn\OneDrive\Desktop\GitHubProjects\Intracranial-Tumor-Detector\V1.1.1\models\MainClasses_01.Jan.2025.19.53.15.387435_32epochs.h5'
-DownloadPath = r'C:\Users\shatn\OneDrive\Desktop\GitHubProjects\Intracranial-Tumor-Detector\V1.1.1\models\MainClasses_01.Jan.2025.19.53.15.387435_32epochs.h5'
-modelName3Classes = r'C:\Users\shatn\OneDrive\Desktop\GitHubProjects\Intracranial-Tumor-Detector\V1.1.1\models\TumorClasses_01.Jan.2025.19.53.15.387435_32epochs.h5'
+modelname = r'C:\Users\shatn\OneDrive\Desktop\GitHubProjects\Intracranial-Tumor-Detector\V1.2\models\MainClasses_01.Jan.2025.19.53.15.387435_32epochs.h5'
+DownloadPath = r'C:\Users\shatn\OneDrive\Desktop\GitHubProjects\Intracranial-Tumor-Detector\V1.2\models\MainClasses_01.Jan.2025.19.53.15.387435_32epochs.h5'
+modelName3Classes = r'C:\Users\shatn\OneDrive\Desktop\GitHubProjects\Intracranial-Tumor-Detector\V1.2\models\TumorClasses_01.Jan.2025.19.53.15.387435_32epochs.h5'
 
 
 MainModel = tf.keras.models.load_model(modelname, compile=False)
