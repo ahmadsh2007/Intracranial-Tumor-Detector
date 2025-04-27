@@ -26,10 +26,18 @@ First, we built an **MRI (Magnetic Resonance Imaging) dataset**, compromising a 
 
 ## **Model Development**
 
-After preprocessing, we ran the images through a **Neural Network** that extracts and learns features from them, then classifies them into two groups: 
+After preprocessing, we ran the images through a **Convolutional Neural Network (CNN)** that extracts and learns features from the MRI scans, classifying them into distinct categories. Initially, the model was trained to differentiate between two main groups:
 
 - **Brain tumor**
 - **No tumor**
+
+However, to improve the diagnostic capabilities, a second model was introduced. This model not only detected the presence of a brain tumor but also classified the type of tumor. Specifically, it was trained to detect and categorize the following tumor types:
+
+- **Meningioma** — A type of tumor that originates in the meninges, the protective layers surrounding the brain and spinal cord.
+- **Glioma** — A tumor that arises from glial cells in the brain or spine, often associated with more aggressive cancer forms.
+- **Pituitary Tumor** — A tumor in or near the pituitary gland, which can affect hormone levels and other vital functions.
+
+This second model further improved the system's ability to provide more detailed insights into the tumor's nature, aiding in better diagnosis and treatment planning.
 
 ## **Graphical User Interface (GUI)**
 
