@@ -1,0 +1,5 @@
+# Ignore model directories in various versions
+GUI/models/
+V1.0/models/
+V1.1/models/
+V1.2/models/
