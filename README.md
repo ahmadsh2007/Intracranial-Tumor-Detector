@@ -1,59 +1,68 @@
+# ICTD: Intracranial Tumor Detector
+
 [![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 [![Python](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/)
-[![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-blue.svg)](https://jupyter.org/)
-[![AI](https://img.shields.io/badge/AI-Enabled-green.svg)](https://www.ibm.com/artificial-intelligence)
-[![CNN](https://img.shields.io/badge/CNN-Model-blue.svg)](https://en.wikipedia.org/wiki/Convolutional_neural_network)
-[![Deep Learning](https://img.shields.io/badge/Deep%20Learning-Enabled-green.svg)](https://www.deeplearning.ai/)
-[![TensorFlow](https://img.shields.io/badge/TensorFlow-Enabled-orange.svg)](https://www.tensorflow.org/)
-[![AI Medical Project](https://img.shields.io/badge/AI%20Medical%20Project-red.svg)](https://en.wikipedia.org/wiki/Artificial_intelligence_in_healthcare)
-[![MSJS Team](https://img.shields.io/badge/MSJS%20Team-Lead%20Software%20Developer-blue.svg)](https://www.linkedin.com/in/ahmadshatnawi/)
+[![TensorFlow](https://img.shields.io/badge/TensorFlow-Keras-orange.svg)](https://www.tensorflow.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-App-FF4B4B.svg)](https://streamlit.io/)
 
-## **Introduction**
+A two-stage convolutional neural network (CNN) pipeline that detects brain tumors in MRI scans and classifies their type, with a Streamlit app that lets clinicians upload scans and view predictions.
 
-Medical errors (MEs) represent one of the most critical challenges within the healthcare sector, and they can be categorized into several types. This project focuses on **diagnostic errors**. **Misdiagnosis** is one of the most common types of malpractice, with **cancer** being one of the most likely conditions to be misdiagnosed. Given the malignant and unpredictable nature of cancer, diagnostic errors could result in **irreversible life-threatening complications** or even mortality.
+🏆 **1st Overall, BT Young Scientist International Competition (2025)** · 🥇 **1st Overall, Jordan Young Scientist (JoYS) (2024)**
 
-## **Project Overview**
+## Results (V1.2)
 
-The **Intracranial Tumor Detector (ICTD)** implements the revolutionary technology of **Artificial Intelligence (AI)** within **Deep Learning (DL)** and **Convolutional Neural Networks (CNN)** in image classification to ensure no tumors go undetected. 
+Measured on held-out test images that were never used in training:
 
-## **Dataset and Preprocessing**
+| Stage | Task | Test images | Correct | Accuracy |
+|-------|------|-------------|---------|----------|
+| 1 | Tumor vs. no tumor | 1,311 | 1,286 | **98.1%** |
+| 2 | Tumor type (glioma / meningioma / pituitary) | 906 | 838 | **92.5%** |
 
-First, we built an **MRI (Magnetic Resonance Imaging) dataset**, compromising a public dataset from **Kaggle** and images from a **local hospital**. We preprocessed the images by:
+Per-class accuracy by stage:
 
-- Resizing
-- Normalizing
-- Augmenting them
+- **Stage 1:** tumor 98.2%, no tumor 97.8%
+- **Stage 2:** pituitary 98.0%, meningioma 91.5%, glioma 88.0%
 
-## **Model Development**
+> The 2024 JoYS submission (V1.0) reported just over 65%. V1.2 improves on it with the two-stage design and retrained models.
 
-After preprocessing, we ran the images through a **Convolutional Neural Network (CNN)** that extracts and learns features from the MRI scans, classifying them into distinct categories. Initially, the model was trained to differentiate between two main groups:
+## Why
 
-- **Brain tumor**
-- **No tumor**
+Diagnostic errors are among the most common kinds of medical malpractice, and cancer is one of the conditions most often misdiagnosed. In Jordan, delays in getting MRI scans make the problem worse. ICTD is a decision-support tool for spotting tumors sooner and more consistently. It is **not** a replacement for a radiologist.
 
-However, to improve the diagnostic capabilities, a second model was introduced. This model not only detected the presence of a brain tumor but also classified the type of tumor. Specifically, it was trained to detect and categorize the following tumor types:
+## How it works
 
-- **Meningioma** — A type of tumor that originates in the meninges, the protective layers surrounding the brain and spinal cord.
-- **Glioma** — A tumor that arises from glial cells in the brain or spine, often associated with more aggressive cancer forms.
-- **Pituitary Tumor** — A tumor in or near the pituitary gland, which can affect hormone levels and other vital functions.
+1. **Dataset**: a public Kaggle brain-MRI dataset merged with images from a local hospital.
+2. **Preprocessing**: resizing to 256×256, normalizing pixel values to [0, 1], and augmentation. The helper scripts are in `File and Image Utilities/`.
+3. **Stage 1 model**: a CNN that classifies a scan as *tumor* or *no tumor*.
+4. **Stage 2 model**: a CNN that classifies the tumor type of positive scans as *glioma*, *meningioma* or *pituitary*.
+5. **App**: a Streamlit interface for uploading scans, viewing predictions and analysing training metrics (`GUI/GUI_V1.2.py`).
 
-This second model further improved the system's ability to provide more detailed insights into the tumor's nature, aiding in better diagnosis and treatment planning.
+## Repository layout
 
-## **Graphical User Interface (GUI)**
+| Path | Contents |
+|------|----------|
+| `V1.2/` | Current models: `MainCatClassification.ipynb` (stage 1) and `TumorClassification.ipynb` (stage 2) |
+| `V1.1/` | Single multi-class model experiments |
+| `V1.0/` | Original per-tumor binary models (JoYS 2024) |
+| `GUI/` | Streamlit app and training-metric CSVs |
+| `5_Classes/` | Inference and testing scripts |
+| `File and Image Utilities/` | Dataset merging, splitting, resizing and renaming tools |
+| `JoYS.pdf` | Full JoYS 2024 research report |
 
-We then created a **Graphical User Interface (GUI)** for **medical professionals** to interact with the model.
+## Running the app
 
-## **Results and Conclusion**
+```bash
+pip install -r GUI/requirements.txt
+streamlit run GUI/GUI_V1.2.py
+```
 
-Finally, we analyzed the results and calculated **accuracy improvement** over time. An accuracy of **over 65%** was achieved. We concluded that higher accuracy could have been achieved if:
+Trained model files are not committed to the repo, so train them with the V1.2 notebooks first. You may also need to update the file paths at the top of `GUI_V1.2.py`.
 
-- Better processing power had been available
-- Better algorithms and tools had been used
+## Team
 
-Nevertheless, this concept is **applicable and crucial for saving lives**.
+Built by the **MSJS team** (Yarmouk University Model School). **Ahmad Shatnawi** was lead software developer: model development, preprocessing pipeline and app.
 
 ## License
 
-This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International Public License. The full license details can be found in the [LICENSE](./LICENSE) file.
-
+Licensed under the [Creative Commons Attribution-NonCommercial 4.0 International License](./LICENSE).
 Copyright (c) 2025 Ahmad Shatnawi, MSJS Team
